@@ -1,6 +1,7 @@
 package com.example.kasper.contacts;
 
 import android.content.ContentProviderOperation;
+import android.content.Intent;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null)
                 .build());
 
+
         final Button addBtn = (Button) findViewById(R.id.btnAdd);
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +56,8 @@ public class MainActivity extends AppCompatActivity {
                     ops.add(ContentProviderOperation.newInsert(
                             ContactsContract.Data.CONTENT_URI)
                             .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
-                            .withValue(ContactsContract.Data.MIMETYPE,
+                            .withValue(
+                                    ContactsContract.Data.MIMETYPE,
                                     ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
                             .withValue(
                                     ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME,
@@ -124,6 +127,10 @@ public class MainActivity extends AppCompatActivity {
         Contacts.add(new Contact(name, phone, email, address));
 
 
+    }
+    public void allContacts(View v) {
+        Intent intent = new Intent(this, contact_list.class);
+        startActivity(intent);
     }
 
 }

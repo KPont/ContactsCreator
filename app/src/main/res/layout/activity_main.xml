@@ -113,4 +113,13 @@
         android:id="@+id/listView"
         android:layout_gravity="center_horizontal" />
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="All Contacts"
+        android:id="@+id/buttonAllContacts"
+        android:layout_gravity="center_horizontal"
+        android:onClick="allContacts" />
+
 </LinearLayout>

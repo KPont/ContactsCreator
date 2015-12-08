@@ -16,6 +16,11 @@ public class Contact {
         _address = address;
     }
 
+    public Contact (String name, String phone){
+        _name = name;
+        _phone = phone;
+    }
+
     public String getName(){
         return _name;
     }
