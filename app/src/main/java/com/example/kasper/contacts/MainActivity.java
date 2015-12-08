@@ -24,31 +24,32 @@ public class MainActivity extends AppCompatActivity {
     EditText nameTxt, phoneTxt, emailTxt, addressTxt;
     List<Contact> Contacts = new ArrayList<Contact>();
 
-    ArrayList < ContentProviderOperation > ops = new ArrayList <ContentProviderOperation> ();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        nameTxt = (EditText) findViewById(R.id.txtName);
-        phoneTxt = (EditText) findViewById(R.id.txtPhone);
-        emailTxt = (EditText) findViewById(R.id.txtEmail);
-        addressTxt = (EditText) findViewById(R.id.txtAddress);
-
-
-
-        ops.add(ContentProviderOperation.newInsert(
-                ContactsContract.RawContacts.CONTENT_URI)
-                .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null)
-                .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null)
-                .build());
-
-
         final Button addBtn = (Button) findViewById(R.id.btnAdd);
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                ArrayList < ContentProviderOperation > ops = new ArrayList <ContentProviderOperation> ();
+
+
+                nameTxt = (EditText) findViewById(R.id.txtName);
+                phoneTxt = (EditText) findViewById(R.id.txtPhone);
+                emailTxt = (EditText) findViewById(R.id.txtEmail);
+                addressTxt = (EditText) findViewById(R.id.txtAddress);
+
+                ops.add(ContentProviderOperation.newInsert(
+                        ContactsContract.RawContacts.CONTENT_URI)
+                        .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null)
+                        .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null)
+                        .build());
+
 
                 int phone = Integer.parseInt(phoneTxt.getText().toString());
                 //------------------------------------------------------ Names
@@ -86,8 +87,7 @@ public class MainActivity extends AppCompatActivity {
                             .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
                             .withValue(ContactsContract.Data.MIMETYPE,
                                     ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE)
-                            .withValue(ContactsContract.CommonDataKinds.Email.DATA, emailTxt.getText().toString())
-                            .withValue(ContactsContract.CommonDataKinds.Email.TYPE, ContactsContract.CommonDataKinds.Email.TYPE_WORK)
+                            .withValue(ContactsContract.CommonDataKinds.Email.ADDRESS, emailTxt.getText().toString())
                             .build());
                 }
 
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        nameTxt.addTextChangedListener(new TextWatcher() {
+/*        nameTxt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -121,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        */
     }
 
     private void addContact(String name, String phone, String email, String address){
@@ -128,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
     public void allContacts(View v) {
         Intent intent = new Intent(this, contact_list.class);
         startActivity(intent);
