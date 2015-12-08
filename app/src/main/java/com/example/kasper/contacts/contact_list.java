@@ -24,6 +24,7 @@ public class contact_list extends AppCompatActivity {
         ArrayList<String> allContacts = new ArrayList<String>();
         lv = (ListView) findViewById(R.id.contacList);
 
+
         ContentResolver cr = this.getContentResolver(); //Activity/Application android.content.Context
         Cursor cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
         if(cursor.moveToFirst())
@@ -46,21 +47,28 @@ public class contact_list extends AppCompatActivity {
                                 .getString(pCur
                                         .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
 
+                        String StringContact = name + "\n" + phoneNumber + "\n";
+
+
+
                         Cursor pCur2 = cr.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI,null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?",new String[]{ id }, null);
 
-                        while (pCur2.moveToNext())
-                        {
 
-                            String address = pCur2
-                                    .getString(pCur2
-                                            .getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
+                            if(pCur2 != null) {
 
-                            String StringContact = name + "\n" + phoneNumber + "\n" + address + "\n\n";
-                            allContacts.add(StringContact);
-                            break;
+                                while (pCur2.moveToNext()) {
 
+                                    String address = pCur2
+                                            .getString(pCur2
+                                                    .getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
+
+                                    StringContact += address+"\n";
+                                    break;
+                                }
+                            pCur2.close();
                         }
-                        pCur2.close();
+                        StringContact +="\n";
+                        allContacts.add(StringContact);
                         break;
 
                     }
