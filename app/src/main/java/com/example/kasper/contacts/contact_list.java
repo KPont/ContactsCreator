@@ -45,16 +45,27 @@ public class contact_list extends AppCompatActivity {
                         String phoneNumber = pCur
                                 .getString(pCur
                                         .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        //String address = pCur
-                          //      .getString(pCur
-                            //            .getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
 
-                        String StringContact = name + "\n" + phoneNumber + "\n\n";
-                        allContacts.add(StringContact);
+                        Cursor pCur2 = cr.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI,null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?",new String[]{ id }, null);
+
+                        while (pCur2.moveToNext())
+                        {
+
+                            String address = pCur2
+                                    .getString(pCur2
+                                            .getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
+
+                            String StringContact = name + "\n" + phoneNumber + "\n" + address + "\n\n";
+                            allContacts.add(StringContact);
+                            break;
+
+                        }
+                        pCur2.close();
                         break;
 
                     }
                     pCur.close();
+
 
                 }
 
